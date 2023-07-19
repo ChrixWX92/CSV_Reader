@@ -2,15 +2,15 @@ package com.chrixwx92;
 
 import com.chrixwx92.csvreader.deserialization.Csv;
 import com.chrixwx92.csvreader.deserialization.Utils;
-import com.chrixwx92.csvreader.filtering.DataFilter;
+import com.chrixwx92.csvreader.filtering.CsvDataFilter;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import static com.chrixwx92.csvreader.filtering.DataFilter.Filter.*;
-import static com.chrixwx92.csvreader.filtering.DataFilter.PreFilter.*;
+import static com.chrixwx92.csvreader.filtering.Filter.*;
+import static com.chrixwx92.csvreader.filtering.PreFilter.*;
 
 public class Main {
 
@@ -18,7 +18,7 @@ public class Main {
 
         Csv csv = Utils.createCsvFromSample();
 
-        DataFilter dataFilter = new DataFilter(csv);
+        CsvDataFilter dataFilter = new CsvDataFilter(csv);
 
         System.out.println("Please select an option to filter CSV results:");
 
@@ -42,7 +42,7 @@ public class Main {
                 case 3 -> System.out.println(dataFilter.filter("address", LENGTH_EQUALS, "3", TRUNCATE));
                 case 4 -> System.out.println(dataFilter.filter("web", LENGTH_EXCEEDS, "35"));
                 case 5 -> System.out.println(dataFilter.filter("postal", LENGTH_EQUALS, "1", TRUNCATE, NUMERICAL));
-                case 6 -> System.out.println(dataFilter.numericalDataNonEqualsComparison("phone2", "phone1"));
+                case 6 -> System.out.println(dataFilter.filter("phone1",GREATER_THAN_COLUMN, "phone2", NUMERICAL));
             }
         } else {
             System.out.println("Invalid input. Please try choose between 1 and 6.");

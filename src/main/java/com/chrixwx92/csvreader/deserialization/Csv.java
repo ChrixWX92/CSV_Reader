@@ -11,7 +11,6 @@ public class Csv {
 
     private final File file;
     private CsvParser parser;
-
     private HashMap<String, ArrayList<String>> data;
 
     public Csv(File file) {
@@ -19,18 +18,29 @@ public class Csv {
         this.parser = null;
     }
 
-    public Csv(File file, CsvParser parser, boolean deserialize) throws IOException {
+    public Csv(File file, CsvParser parser, boolean deserialize) {
         this.file = file;
         this.parser = parser;
-        if (deserialize) this.filter();
+        if (deserialize) this.parse();
     }
 
-    public void filter() throws IOException {
-        this.data = this.parser.parse(this.file);
+    public void parse() {
+        if (this.parser != null) {
+            try {
+                this.data = this.parser.parse(this.file);
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+                System.out.println("Error parsing CSV data.");
+            }
+        }
+        else {
+            System.out.println("No parser specified for CSV file.");
+        }
     }
 
     public boolean isDeserialized() { return !this.data.isEmpty();}
 
+    public void setParser(CsvParser parser) { this.parser = parser; }
     public HashMap<String, ArrayList<String>> getData() { return data; }
 
 }

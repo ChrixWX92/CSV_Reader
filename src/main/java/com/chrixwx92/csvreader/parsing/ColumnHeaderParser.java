@@ -16,7 +16,6 @@ public class ColumnHeaderParser extends HashMapParser implements CsvParser {
 
         try (BufferedReader br = new BufferedReader(new FileReader(csv))) {
 
-            //TODO br.readLine() returns null?
             generateHeaders(br.readLine());
             List<String[]> bodyLines = new ArrayList<>();
 
@@ -54,9 +53,6 @@ public class ColumnHeaderParser extends HashMapParser implements CsvParser {
 
     }
 
-    //NOTE: Time complexity optimisation cannot be assumed, as we don't know whether our CSV will contain more rows/columns
-    // This could be optimised with additional code to check the length of the CSV being filtered, but would only be practical
-    // if assuming potential large file processing
     private void  mapLines(List<String[]> lines) {
         int counter = 0;
         for (String header : this.headers) {
